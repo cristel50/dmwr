@@ -1,0 +1,66 @@
+---
+title: "DMWR 2nd Chapter"
+output: html_document
+---
+
+```{r}
+library(DMwR)
+library(rplot)
+library(rattle)  				# Fancy tree plot
+library(rpart.plot)				# Enhanced tree plots
+library(RColorBrewer)	
+library(caret)
+
+
+
+str(algae)
+summary(algae)
+head(algae)
+
+dim(algae)
+# Find the complete cases
+complete.cases(algae)
+#algae[complete.cases(algae),]
+sum(complete.cases(algae))
+
+algae[is.na(algae$mxPH),]
+
+find_all_num_cols <- function(df)
+{
+  ncl <- ncol(df)
+  collist <- seq(1,ncl)
+  collist[sapply(df, function(x) ifelse(is.numeric(x)==TRUE,TRUE,FALSE))]
+}
+
+numcols <- find_all_num_cols(algae)
+ab <- function(x) 
+  { 
+  ifelse(is.na(x)==TRUE,mean(x,na.rm=TRUE),x)  
+  }
+algae[,numcols] <- sapply(algae[,numcols],ab)
+                  
+ 
+summary(algae)
+
+write.table(algae,file='alg.csv',sep=',',row.names=FALSE,col.names=TRUE)
+plot(algae[,3],algae$a1)
+
+algae_1 <- algae[,c(seq(1,12))]
+coln <- colnames(algae)
+
+frml <- as.formula('a1 ~ . -oPO4')
+rp <- rpart(frml,method='anova',data=algae_1,control=rpart.control(cp=0.01))
+plot(rp)
+text(rp, use.n = TRUE)
+summary(rp)
+fancyRpartPlot(rp)
+
+
+plot(algae$PO4[algae$PO4<44],algae$a1[algae$PO4<44])
+plot(algae$PO4,algae$oPO4)
+?glm
+
+
+lr 
+```
+
