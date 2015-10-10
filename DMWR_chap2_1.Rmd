@@ -59,9 +59,6 @@ fancyRpartPlot(rp)
 plot(algae$PO4[algae$PO4<44],algae$a1[algae$PO4<44])
 plot(algae$PO4,algae$oPO4)
 ?glm
-
-jknj jk l njnk njk nij hiuy ygygjhjg g hjgjkg kjhkg
-
-lr 
+ 
 ```
 
